@@ -18,30 +18,28 @@ function Fighter(health, attackP, counterAttack) {
     };
 
     this.defend = function(count) { // 
-            console.log(this.health);
-            this.health = this.health - count;
-            console.log(this.health);
-            console.log("this is from defend fn");
+        console.log(this.health);
+        this.health = this.health - count;
+        console.log(this.health);
+        console.log("this is from defend fn");
+    },
 
-        },
 
-
-        this.counter = function() {
-
-            return this.counterAttack;
-        };
+    this.counter = function() {
+        return this.counterAttack;
+    };
 };
 //set up fighters
-var greg = new Fighter(200, 33, 30);
-var jason = new Fighter(100, 5, 21);
-
+var player1 = new Fighter(120, 33, 30);
+var player2 = new Fighter(100, 5, 21);
+var player3 = new Fighter(150, 33, 30);
+var player4 = new Fighter(180, 5, 21);
 // set up fight
 
 $(document).ready(function() {
 
-
-    me = greg;
-    opponent = jason;
+    me = player3;
+    opponent = player4;
     counter = opponent.counter(); // have to define the counter attack from enemy/ this value is static
 
 
@@ -140,6 +138,36 @@ $(document).ready(function() {
         $('#badGuy').html("Enemy Health is: " + opponent.health);
         betterWincheck(me.health, opponent.health); // win/lose/continue check
     });
+
+     $("#player4").click(function() {
+
+        $('#player3').appendTo('#bad-guy');
+
+    });
+
+   $("#box1").click(function() {
+
+        $('#player2').appendTo('#opponent');
+
+    });
+
+    $("#player2").click(function() {
+
+        $('#player2').appendTo('#good-guy');
+        $('#player1').appendTo('#bad-guy');
+        $('#player3').appendTo('#bad-guy');
+        $('#player4').appendTo('#bad-guy');
+
+    });
+
+
+    //reset
+
+    // game
+
+    // first palyer button clicked gets assigned to the player var
+
+    
 
 
 });

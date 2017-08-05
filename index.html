@@ -13,56 +13,92 @@
 </head>
 
 <body>
-<!--     <h1 id="hello">Hello world</h2> -->
-
-    <div class="Row"> <!-- Top Row -->  
-		<h2>Your Character</h2>
-    	<div class="col-md-8">	
-    	<p>some text n md-8</p>
-    	</div>
-    	<div class="col-md-4">	
-    	<p>some text in md-4</p>
-    	</div>
+    <!--     <h1 id="hello">Hello world</h2> -->
+    <div class="Row">
+        <!-- Top Row -->
+        <div class="col-md-12">
+            <p>Pick your player</p>
+            <h2>Welcome to the Game</h2>
+            <button type="button" class="btn" id="player1">player1</button>
+            <button type="button" class="btn" id="player2">player2</button>
+            <button type="button" class="btn" id="player3">player3</button>
+            <button type="button" class="btn" id="player4">player4</button>
+        </div>
     </div>
-
-       <div class="Row"> <!-- Top Row -->  
-       <h2>Enemies Available to Attack</h2>
-
-    	<div class="col-md-8">	
-    	<p>some text n md-8</p>
-    	</div>
-    	<div class="col-md-4">	
-    	<p>some text in md-4</p>
-    	</div>
+    <div class="Row">
+        <div class="col-md-6 pull-left" id="good-guy">
+            <h2>Your Character</h2>
+            <!--             <p>some text n md-6</p>
+            <button type="button" class="btn" id="player1">player1</button>
+            <button type="button" class="btn" id="player2">player2</button>
+            <button type="button" class="btn" id="player3">player3</button>
+            <button type="button" class="btn" id="player4">player4</button> -->
+        </div>
+        <div class="col-md-6 pull-left">
+            <p>some text in md-6</p>
+            <div id="box1">box1</div>
+            <div id="box2">box2</div>
+            <div id="box3">box3</div>
+            <div id="box4">box4</div>
+        </div>
     </div>
-      <div class="Row"> <!-- Top Row -->  
-      <h2>Fight Club Man!</h2>
-      <button type="button" class="btn" id="attackBtn">Attack</button>
-      <button type="button" class="btn" id="resetBtn">Reset</button>
-
-
-    	<div class="col-md-8">	
-    	<p>goodGuy health here</p>
-    	<p id="goodGuy"></p>
-    	</div>
-    	<div class="col-md-4">	
-    	<p>some text in md-4</p>
-    	</div>
+    <div class="Row">
+        <!-- Top Row -->
+        <div class="col-md-8" id="bad-guy">
+            <h2>Enemies Available to Attack</h2>
+            <p>Choose your opponent</p>
+        </div>
+        <div class="col-md-4">
+            <p>some text in md-4</p>
+        </div>
     </div>
-         <div class="Row"> <!-- Top Row -->  
-		<h2>Defender</h2>
-    	<div class="col-md-8">	
-    	<p>Badguy text</p>
-    	<p id="badGuy"></p>
-    	</div>
-    	<div class="col-md-4">	
-    	<p>some text in md-4</p>
-    	</div>
+    <div class="Row">
+        <!-- Top Row -->
+        <div class="col-md-12">
+            <h2>Fight Club Man!</h2>
+            <button type="button" class="btn" id="attackBtn">Attack</button>
+            <button type="button" class="btn" id="resetBtn">Reset</button>
+        </div>
+        <!--      <div class="col-md-4">
+            <p>some text in md-4</p>
+        </div> -->
     </div>
-
-
+    <div class="Row">
+        <!-- Top Row -->
+        <h2>Welcome to the Game</h2>
+        <div class="col-md-12">
+            <p>Pick your player</p>
+        </div>
+    </div>
+    <div class="Row">
+        <!-- Top Row -->
+        
+        <div class="col-md-12" id="opponent">
+        <h2>Defender</h2>
+            <!--      <p>Badguy text</p>
+            <p id="badGuy"></p>
+            <p>goodGuy health here</p>
+            <p id="goodGuy"></p> -->
+        </div>
+        <!--    <div class="col-md-4">
+            <p>some text in md-4</p>
+        </div> -->
+    </div>
+    <div class="Row">
+        <!-- Top Row -->
+        <!-- <div class="col-md-12" id="opponent"> -->
+        <div class="col-md-12">
+            <h2>Stats</h2>
+            <p>Badguy text</p>
+            <p id="badGuy"></p>
+            <p>goodGuy health here</p>
+            <p id="goodGuy"></p>
+        </div>
+        <!--    <div class="col-md-4">
+            <p>some text in md-4</p>
+        </div> -->
+    </div>
 </body>
-
 <script type="text/javascript" src="./assets/js/script.js"></script>
 
 </html>

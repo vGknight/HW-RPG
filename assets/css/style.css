@@ -5,3 +5,14 @@ body{
 h1{
 	/*color: white;*/
 }
+
+#box1,#box2,#box3,#box4{
+	max-width: 100px;
+	max-height: 100px;
+	padding: 3px;
+	background-color: yellow;
+	float: left!important;
+	border: solid;
+	margin: 10px;
+
+}
