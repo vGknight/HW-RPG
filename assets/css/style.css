@@ -16,3 +16,18 @@ h1{
 	margin: 10px;
 
 }
+#main-player-div,
+#my-char-div,
+#choose-enemy,
+#defender{
+	border:solid;
+	background-color: yellow;
+}
+
+.enemy{
+	background-color: red;
+}
+
+.hero{
+	background-color: green;
+}
