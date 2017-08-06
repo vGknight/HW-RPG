@@ -1,5 +1,8 @@
 body{
 	/*background-image: url(../Images/backround.jpg);*/
+	/*background-image: */
+	/*color: white;*/
+	/*opacity:.5;*/
 }
 
 h1{
@@ -7,13 +10,14 @@ h1{
 }
 
 #box1,#box2,#box3,#box4{
-	max-width: 100px;
-	max-height: 100px;
+	max-width: 300px;
+	max-height: 300px;
 	padding: 3px;
 	background-color: yellow;
 	float: left!important;
 	border: solid;
 	margin: 10px;
+	/*opacity:1!important;*/
 
 }
 #main-player-div,
@@ -22,16 +26,87 @@ h1{
 #defender{
 	border:solid;
 	background-color: yellow;
+	/*opacity: 1!important;*/
 }
 
 .enemy{
 	background-color: red;
+	border-color:red!important;
 }
 
 .hero{
 	background-color: green;
+	border: solid;
+	border-color: green!important;
+
 }
 
 .dead{
+	
 	display: none;
+
+}
+#main-head{
+	text-align: right;
+}
+
+#box1{
+	background-image: url(../images/odb.jpg);
+	 /*background-size: 300px 300px;*/
+    background-repeat: no-repeat;
+    width: 190px;
+    height: 190px;
+    background-color: blue;
+
+
+}
+
+#box2{
+	background-image: url(../images/ghostface.jpg);
+	 /*background-size: 300px 300px;*/
+    background-repeat: no-repeat;
+    width: 190px;
+    height: 190px;
+    background-color: blue;
+
+
+}
+
+#box3{
+	background-image: url(../images/method_man.jpg);
+	 /*background-size: 300px 300px;*/
+    background-repeat: no-repeat;
+    width: 190px;
+    height: 190px;
+    background-color: blue;
+
+
+}
+#box4{
+	background-image: url(../images/rza.jpg);
+	 /*background-size: 300px 300px;*/
+    background-repeat: no-repeat;
+    width: 190px;
+    height: 190px;
+    /*background-color: blue;*/
+
+
+
+}
+
+#button_p1{
+	background-image: url(../images/rza.jpg);
+	 /*background-size: 300px 300px;*/
+    background-repeat: no-repeat;
+    width: 190px;
+    height: 190px;
+    background-color: blue;
+
+}
+.Row{
+	margin-top: 10px!important;
+}
+
+.fade{
+	opacity: .25;
 }
