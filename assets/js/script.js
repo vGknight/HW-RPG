@@ -1,8 +1,9 @@
-function Fighter(health, attackP, counterAttack) {
+function Fighter(health, attackP, counterAttack, myName) {
     this.health = health;
     this.attackP = attackP;
     this.counterAttack = counterAttack;
-    this.attackIncrement = attackP; // set increment value to original ammount of attack power
+    this.attackIncrement = attackP; 
+    this.myName = myName;
 
     this.attack = function(count) { //method takes in opponents counter attack power,
         console.log("my health " + this.health);
@@ -28,17 +29,17 @@ function Fighter(health, attackP, counterAttack) {
             return this.counterAttack;
         };
 };
-//set up fighters
-var player1_Obj = new Fighter(120, 33, 30);
-var player2_Obj = new Fighter(100, 5, 21);
-var player3_Obj = new Fighter(150, 33, 30);
-var player4_Obj = new Fighter(180, 5, 21);
+//set up fighter objects
+var player1_Obj = new Fighter(120, 33, 30,"player1");
+var player2_Obj = new Fighter(100, 5, 21, "player2");
+var player3_Obj = new Fighter(150, 33, 30, "player3");
+var player4_Obj = new Fighter(180, 5, 21, "player4");
 // set up fight
 
 $(document).ready(function() {
 
-    myEnemy = "empty"; //set vars to static value to check agains for assignment
-    var myFighter = "empty";
+    myEnemy = "empty"; //set vars to static value to check agains for assignment not declaring global var since i need to delete this via a function and i cant delete global variables
+    var myFighter = "empty"; 
 
     $('#main-player-div').on('click', 'button', function(e) {
         var x = this.id;
@@ -65,9 +66,10 @@ $(document).ready(function() {
             } else if (myFighter === "player3") {
                 myFighter = player3_Obj;
                 console.log(myFighter);
-            } else {
+            } else if(myFighter === "player4") {
                 myFighter = player4_Obj;
             }
+            else{console.log("something is wrong")};
 
         } else {
             // do nothing
@@ -113,7 +115,7 @@ $(document).ready(function() {
             // return;
         };
 
-        console.log("currently my enemy is " + myEnemy);
+        console.log("currently my enemy is " + myEnemy.myName);
         counter = myEnemy.counter();
 
         // console.log(selected);
@@ -133,7 +135,7 @@ $(document).ready(function() {
             alert("Game Over You Lose");
         } else {
             console.log("Keep fighting");
-            alert("Keep fighting");
+            // alert("Keep fighting");
         }
     }
 
@@ -141,19 +143,27 @@ $(document).ready(function() {
     $("#attackBtn").click(function() {
         console.log("myFigher var is " + myFighter);
 
+
         if (myFighter && myEnemy != "empty") {
+
+            
+            $('#goodGuy').html("You attacked " + myEnemy.myName + " for " + myFighter.attackP);
             myFighter.attack(counter); // i attack my opponnent this increments the 
+
             myFighter.defend(counter); // i defend myself from enemy counterAttack
             myEnemy.defend(myFighter.attackP); // hurt the enemy
             console.log("My health is " + myFighter.health);
             console.log("Opponent health is " + myEnemy.health);
-            $('#goodGuy').html("My Health is: " + myFighter.health);
+            // $('#goodGuy').html("My Health is: " + myFighter.health);
+
+
             $('#badGuy').html("Enemy Health is: " + myEnemy.health);
             betterWincheck(myFighter.health, myEnemy.health); // win/lose/continue check
 
 
         }
-        else{console.log("nothing to see here")};
+        else{console.log("Pick a fighter man")};
+
 
 
 
@@ -163,7 +173,8 @@ $(document).ready(function() {
     $("#resetBtn").click(function() {
 
         // set up reset code here
-        alert(myEnemy);
+        // alert(myEnemy);
+        window.location.reload(true);
 
     });
 
