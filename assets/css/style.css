@@ -31,3 +31,7 @@ h1{
 .hero{
 	background-color: green;
 }
+
+.dead{
+	display: none;
+}
