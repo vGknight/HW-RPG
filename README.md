@@ -15,7 +15,9 @@ Logic to do
 		pseudo code
 
 		when game starts,
+
 			hide attack and reset button
+
 			detect if  player button clicked, assign 'me' var to this value
 				move to chosen player field
 				move other buttons to enemie chose section
@@ -35,6 +37,8 @@ Logic to do
 			on lose, offer reset
 
 			on win, show final victory screen
+
+			how to status killed off players (set custom attribute ?)
 
 
 

@@ -1,8 +1,11 @@
 body{
-	/*background-image: url(../Images/backround.jpg);*/
+	background-image: url(../Images/backround.jpg);
+	background-position: right 10px top;
 	/*background-image: */
 	/*color: white;*/
 	/*opacity:.5;*/
+	background-repeat: no-repeat;
+	background-color: black;
 }
 
 h1{
@@ -13,7 +16,7 @@ h1{
 	max-width: 300px;
 	max-height: 300px;
 	padding: 3px;
-	background-color: yellow;
+	/*background-color: yellow;*/
 	float: left!important;
 	border: solid;
 	margin: 10px;
@@ -24,8 +27,8 @@ h1{
 #my-char-div,
 #choose-enemy,
 #defender{
-	border:solid;
-	background-color: yellow;
+	/*border:solid;*/
+	/*background-color: yellow;*/
 	/*opacity: 1!important;*/
 }
 
@@ -43,7 +46,8 @@ h1{
 
 .dead{
 	
-	display: none;
+	/*display: none;*/
+	/*visibility: hidden;*/
 
 }
 #main-head{
@@ -51,39 +55,39 @@ h1{
 }
 
 #box1{
-	background-image: url(../images/odb.jpg);
+	background-image: url(../images/odb-1.jpg);
 	 /*background-size: 300px 300px;*/
     background-repeat: no-repeat;
     width: 190px;
     height: 190px;
-    background-color: blue;
+    /*background-color: blue;*/
 
 
 }
 
 #box2{
-	background-image: url(../images/ghostface.jpg);
+	background-image: url(../images/ghostface-1.jpg);
 	 /*background-size: 300px 300px;*/
     background-repeat: no-repeat;
     width: 190px;
     height: 190px;
-    background-color: blue;
+    /*background-color: blue;*/
 
 
 }
 
 #box3{
-	background-image: url(../images/method_man.jpg);
+	background-image: url(../images/method_man1.jpg);
 	 /*background-size: 300px 300px;*/
     background-repeat: no-repeat;
     width: 190px;
     height: 190px;
-    background-color: blue;
+    /*background-color: blue;*/
 
 
 }
 #box4{
-	background-image: url(../images/rza.jpg);
+	background-image: url(../images/rza-1.jpg);
 	 /*background-size: 300px 300px;*/
     background-repeat: no-repeat;
     width: 190px;
