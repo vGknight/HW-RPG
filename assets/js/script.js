@@ -6,19 +6,14 @@ function Fighter(health, attackP, counterAttack, myName) {
     this.myName = myName;
 
     this.attack = function(count) { //method takes in opponents counter attack power,
-
         // this.health = this.health + this.attackP; //increased health by attack power
         this.health = this.health - count; // subtract passed in counter attack from enemy
         this.attackP = this.attackP + this.attackIncrement; //increase attack power for next punch
     };
 
     this.defend = function(count) { // 
-
             this.health = this.health - count;
-
         },
-
-
         this.counter = function() {
             return this.counterAttack;
         };
