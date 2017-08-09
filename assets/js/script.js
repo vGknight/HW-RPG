@@ -7,7 +7,7 @@ function Fighter(health, attackP, counterAttack, myName) {
 
     this.attack = function(count) { //method takes in opponents counter attack power,
 
-        this.health = this.health + this.attackP; //increased health by attack power
+        // this.health = this.health + this.attackP; //increased health by attack power
         this.health = this.health - count; // subtract passed in counter attack from enemy
         this.attackP = this.attackP + this.attackIncrement; //increase attack power for next punch
     };
@@ -24,35 +24,75 @@ function Fighter(health, attackP, counterAttack, myName) {
         };
 };
 //set up fighter objects
-var player1_Obj = new Fighter(120, 33, 30, "odb");
-var player2_Obj = new Fighter(100, 18, 35, "ghost");
-var player3_Obj = new Fighter(150, 25, 25, "method");
-var player4_Obj = new Fighter(180, 15, 21, "rza");
+var player1_Obj = new Fighter(120, 9, 18, "odb");
+var player2_Obj = new Fighter(105, 11, 22, "ghost");
+var player3_Obj = new Fighter(150, 7, 15, "method");
+var player4_Obj = new Fighter(175, 5, 11, "rza");
+
+var winCount = 0;
+
+//sound effects
+var beginFightSnd = document.createElement("audio");
+beginFightSnd.setAttribute("src", "Assets/audio/begin_fight.mp3");
+
+var introSound = document.createElement("audio");
+introSound.setAttribute("src", "Assets/audio/intro.mp3");
+
 // set up fight
 
 $(document).ready(function() {
 
+    //hide stuff for intro
+    $('#main-player-div').hide();
+    $('#pick-hero').hide();
+    $('#main-player-div').delay(6500).fadeIn('slow');
+    $('#pick-hero').delay(7500).fadeIn('slow');
+    introSound.play();
+
     myEnemy = "empty"; //set vars to static value to check agains for assignment not declaring global var since i need to delete this via a function and i cant delete global variables
     var myFighter = "empty";
+    $("#good-guy").find("#pick-hero").addClass("callToAction");
+
+    // populate default HP and ATtack
+    var arr = [player1_Obj, player2_Obj, player3_Obj, player4_Obj];
+    for (var i = 0; i < arr.length; i++) {
+        theName = arr[i].myName;
+        theAtk = arr[i].attackP;
+        theHp = arr[i].health;
+        var myHp = $("#" + theName + "-health");
+        var myAt = $("#" + theName + "-attack");
+        myHp.html("HP: " + theHp);
+        myAt.html("Atk: " + theAtk);
+
+    }
+
 
     $('#main-player-div').on('click', 'div', function(e) {
         var x = this.id;
-        // alert(this.id);
+
         if (myFighter === "empty") {
             myFighter = x;
 
             //move to fight area
             varId = this.id;
-            $('#' + varId).appendTo('#good-guy'); //move to div
+            $('#' + varId).appendTo('.hero-corner'); //move to div
             $('#' + varId).addClass("hero"); // turns hero  green
-             $('html, body').animate({
+
+
+            $('html, body').animate({
                 scrollTop: ($('#my-char-div').offset().top)
             }, 500);
 
-            // enemy = $("#main-player-div").find(".btn");
+            $('#pick-hero').addClass('view-hidden');
+            $('#enemy-h2').show();
+            $('#enemy-h2').addClass('callToAction');
+            $('.hero-corner').addClass('callToAction');
+            $('.hero-corner').show();
+            $('#defender').show();
+
             enemy2 = $("#main-player-div").find(".fighters");
             console.log(enemy2);
-            // enemy.removeClass("hero");
+
             enemy2.removeClass("hero");
             // enemy.addClass("enemy"); //turns all enemies red
             enemy2.addClass("enemy"); //turns all enemies red
@@ -75,35 +115,37 @@ $(document).ready(function() {
         } else {
             // do nothing
             return;
-            // $("#main-player-div").find(".btn").addClass("enemy");
         };
 
 
     });
     //select buttons in #bad guy div and log the id if enemy isnt already chosen
-    // $('#bad-guy').on('click', 'div', function(e) {
+
     $('#bad-guy').on('click', 'div', function(e) {
+
+        beginFightSnd.play();
         var x = this.id;
         if (myEnemy === "empty") {
             myEnemy = x;
 
             //move to fight area
             varId = this.id;
-            $('#' + varId).appendTo('#defender'); //move to div
+            $('#' + varId).prependTo('.enemy-corner'); //move to div
             $('#' + varId).addClass("enemy");
+            $('#opponent').addClass('callToAction');
+            $('#defender').show();
+            $('#opponent').show();
+            $('#opponent-area').show();
+            $('#stats').show();
+            $('#wage-war').show();
+            $('#choose-enemy').hide();
+
             // $('body').scrollTo('#defender');
-
-
-
 
             $('html, body').animate({
                 scrollTop: ($('#defender').offset().top)
             }, 500); // turns them red
             // should create a function and call it here to secure the screens
-            // $('#choose-enemy').each(function(index, el) {
-
-            // $('#bad-guy').each(function(index, el) {});
-
             //assign correct enemy object
             // alert(myEnemy);
             if (myEnemy === "box1") {
@@ -121,43 +163,53 @@ $(document).ready(function() {
             }
 
         } else {
-            // alert("nope")
-            // alert(window.myEnemy);
-            // return;
+
+            return;
         };
 
-        console.log("currently my enemy is " + myEnemy.myName);
+        // console.log("currently my enemy is " + myEnemy.myName);
         counter = myEnemy.counter();
 
-        // console.log(selected);
     });
 
 
-    function betterWincheck(myHealth, enemyHealth) {
+    function winCheck(myHealth, enemyHealth) {
         console.log("My Health is " + myHealth);
         console.log(myEnemy.myName + " his health is " + enemyHealth);
         if (myHealth > 0 && enemyHealth <= 0) {
             console.log("Good Guy wins");
-            alert("Game Over You Win");
-              $('html, body').animate({
+            winCount++;
+            // alert(win)
+            if (winCount == 3) {
+                $('#enemy-h2').html("Flawless Victory!");
+                $('#hero').html("Winner");
+                $('#attackBtn').addClass('view-hidden');
+            } else {
+                $('#choose-enemy').show();
+                $('#opponent').removeClass('callToAction');
+            };
+
+            $('html, body').animate({
                 scrollTop: ($('#choose-enemy').offset().top)
             }, 500);
+            alert("Game Over You Win");
 
             cartOffEnemy();
-            setTimeout(fadeEnemy, 1500);
-            // cartOffEnemy();
+            setTimeout(fadeEnemy, 500);
 
         } else if (enemyHealth > 0 && myHealth <= 0) {
             console.log("Not this time Sparky");
             alert("Game Over You Lose");
+        } else if (myHealth <= 0 && enemyHealth <= 0) {
+            console.log("you both died");
+            alert("Game Over You Lose, But you killed this dude");
+            $('#attackBtn').addClass('view-hidden');
         } else {
             console.log("Keep fighting");
-            // alert("Keep fighting");
         }
     }
 
     // on click  run attack, upate html
-    // $(".fighters").click(function() {
     $("#attackBtn").click(function() {
         console.log("myFigher var is " + myFighter.myName);
 
@@ -165,18 +217,31 @@ $(document).ready(function() {
         if (myFighter && myEnemy != "empty") {
 
 
-            $('#goodGuy').html("You attacked " + myEnemy.myName + " for " + myFighter.attackP);
-            myFighter.attack(counter); // i attack my opponnent this increments the 
+            // i attack my opponnent this increments the 
+            $('#goodguy-fight').html("You attacked " + myEnemy.myName + " for " + myFighter.attackP + " damage");
 
-            myFighter.defend(counter); // i defend myself from enemy counterAttack
+
+            myFighter.attack(counter); // call attack function
+            $('#badGuy').html("Enemy Health is: " + myEnemy.health);
+            // myFighter.defend(counter); // i defend myself from enemy counterAttack
             myEnemy.defend(myFighter.attackP); // hurt the enemy
+            $('#badguy-fight').html(myEnemy.myName + " attacked you back for " + myEnemy.counterAttack);
             console.log("My health is " + myFighter.health);
             console.log("Opponent health is " + myEnemy.health);
-            // $('#goodGuy').html("My Health is: " + myFighter.health);
 
+            winCheck(myFighter.health, myEnemy.health); // win/lose/continue check
 
-            $('#badGuy').html("Enemy Health is: " + myEnemy.health);
-            betterWincheck(myFighter.health, myEnemy.health); // win/lose/continue check
+            var myHp = $("#" + myFighter.myName + "-health");
+            var myAt = $("#" + myFighter.myName + "-attack");
+            myHp.html("HP: " + myFighter.health);
+            myAt.html("Atk: " + myFighter.attackP);
+
+            var oppHp = $("#" + myEnemy.myName + "-health");
+            var oppAt = $("#" + myEnemy.myName + "-attack");
+            oppHp.html("HP: " + myEnemy.health);
+            oppAt.html("Atk: " + myEnemy.attackP);
+            console.log("this is myenemys atk" + myEnemy.attackP)
+
 
 
         } else { console.log("Pick a fighter man") };
@@ -207,8 +272,6 @@ function cartOffEnemy() {
 
     var fallenSoldier = $("#defender").find(".enemy");
     fallenSoldier.addClass("fade");
-    // fallenSoldier.addClass("dead");
-    // resetEnemy();
 }
 
 
@@ -223,58 +286,7 @@ function resetEnemy() {
 
 function fadeEnemy(id) {
     var fallenSoldier = $("#defender").find(".enemy");
-    // fallenSoldier.addClass("fade");
     fallenSoldier.addClass("dead");
     resetEnemy();
 
 }
-
-
-// console.log("Round One-------------------------------");
-// me.attack(counter); // i attack my opponnent this increments the 
-// me.defend(counter); // i defend myself from enemy counterAttack
-// opponent.defend(me.attackP); // hurt the enemy
-// console.log("My health is " + me.health);
-// console.log("Opponent health is " + opponent.health);
-// $('#goodGuy').html("My Health is: " + me.health);
-// $('#badGuy').html("Enemy Health is: " + opponent.health);
-// betterWincheck(me.health, opponent.health); // win/lose/continue check
-
-
-
-
-// console.log("Round Two-------------------------------");
-// me.attack(counter);
-// me.defend(counter);
-// opponent.defend(me.attackP);
-// console.log("My health is " + me.health);
-// console.log("Opponent health is " + opponent.health);
-// $('#goodGuy').html("My Health is: " + me.health);
-// $('#badGuy').html("Enemy Health is: " + opponent.health);
-// betterWincheck(me.health, opponent.health);
-// console.log("attack power for me is --------------------------------" + me.attackP);
-
-
-
-// console.log("Round Three-------------------------------");
-// me.attack(counter);
-// me.defend(counter);
-// opponent.defend(me.attackP);
-// console.log("My health is " + me.health);
-// console.log("Opponent health is " + opponent.health);
-// $('#goodGuy').html("My Health is: " + me.health);
-// $('#badGuy').html("Enemy Health is: " + opponent.health);
-// betterWincheck(me.health, opponent.health);
-// console.log("attack power for me is --------------------------------" + me.attackP);
-
-
-
-// console.log("Round Four-------------------------------");
-// me.attack(counter);
-// me.defend(counter);
-// opponent.defend(me.attackP);
-// console.log("My health is " + me.health);
-// console.log("Opponent health is " + opponent.health);
-// $('#goodGuy').html("My Health is: " + me.health);
-// $('#badGuy').html("Enemy Health is: " + opponent.health);
-// betterWincheck(me.health, opponent.health);

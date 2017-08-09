@@ -114,3 +114,40 @@ h1{
 .fade{
 	opacity: .25;
 }
+
+#pick-hero,
+.callToAction{
+	color:white;
+}
+
+.hide-onload,
+.display-none,
+.view-hidden{
+	/*display: none!important;*/
+	/*visibility: hidden;*/
+	display: none;
+}
+
+#wage-war{
+	text-align: center;
+}
+.fighters p{
+	text-align: right;
+	color: green;
+	margin-top: 18px;
+}
+
+p{
+	font-weight: bold;
+}
+/*.fade-out{
+	background-color: black;
+}*/
+
+/*.fade-out{
+    height: 2100px;
+    width: 2100px;
+    position:absolute;
+    z-index: 99;
+    background-color: red;
+}*/
