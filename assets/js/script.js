@@ -1,9 +1,10 @@
-function Fighter(health, attackP, counterAttack, myName) {
+function Fighter(health, attackP, counterAttack, myName, fullName) {
     this.health = health;
     this.attackP = attackP;
     this.counterAttack = counterAttack;
     this.attackIncrement = attackP;
     this.myName = myName;
+    this.fullName = fullName;
 
     this.attack = function(count) { //method takes in opponents counter attack power,
         // this.health = this.health + this.attackP; //increased health by attack power
@@ -19,17 +20,17 @@ function Fighter(health, attackP, counterAttack, myName) {
         };
 };
 //set up fighter objects
-var player1_Obj = new Fighter(120, 9, 18, "odb");
-var player2_Obj = new Fighter(105, 11, 22, "ghost");
-var player3_Obj = new Fighter(150, 7, 15, "method");
-var player4_Obj = new Fighter(175, 5, 11, "rza");
 
+
+var player1_Obj = new Fighter(120, 9, 16, "odb", "Ol' Dirty B******");
+var player2_Obj = new Fighter(104, 11, 18, "ghost", "Ghost Face Killah");
+var player3_Obj = new Fighter(130, 7, 13, "method", "Method Man");
+var player4_Obj = new Fighter(155, 5, 9, "rza", "The Rza");
 var winCount = 0;
 
 //sound effects
 var beginFightSnd = document.createElement("audio");
 beginFightSnd.setAttribute("src", "Assets/audio/begin_fight.mp3");
-
 var introSound = document.createElement("audio");
 introSound.setAttribute("src", "Assets/audio/intro.mp3");
 
@@ -39,9 +40,10 @@ $(document).ready(function() {
 
     //hide stuff for intro
     $('#main-player-div').hide();
+    hideButtons();
     $('#pick-hero').hide();
-    $('#main-player-div').delay(6500).fadeIn('slow');
-    $('#pick-hero').delay(7500).fadeIn('slow');
+    $('#main-player-div').delay(6000).fadeIn('slow');
+    $('#pick-hero').delay(7800).fadeIn('slow');
     introSound.play();
 
     myEnemy = "empty"; //set vars to static value to check agains for assignment not declaring global var since i need to delete this via a function and i cant delete global variables
@@ -54,10 +56,13 @@ $(document).ready(function() {
         theName = arr[i].myName;
         theAtk = arr[i].attackP;
         theHp = arr[i].health;
+        theCA = arr[i].counterAttack;
         var myHp = $("#" + theName + "-health");
         var myAt = $("#" + theName + "-attack");
+        var myCA = $("#" + theName + "-counter");
         myHp.html("HP: " + theHp);
-        myAt.html("Atk: " + theAtk);
+        myAt.html("AT: " + theAtk);
+        myCA.html("CA: " + theCA);
 
     }
 
@@ -73,11 +78,6 @@ $(document).ready(function() {
             $('#' + varId).appendTo('.hero-corner'); //move to div
             $('#' + varId).addClass("hero"); // turns hero  green
 
-
-            $('html, body').animate({
-                scrollTop: ($('#my-char-div').offset().top)
-            }, 500);
-
             $('#pick-hero').addClass('view-hidden');
             $('#enemy-h2').show();
             $('#enemy-h2').addClass('callToAction');
@@ -85,14 +85,13 @@ $(document).ready(function() {
             $('.hero-corner').show();
             $('#defender').show();
 
-            enemy2 = $("#main-player-div").find(".fighters");
-            console.log(enemy2);
+            enemy = $("#main-player-div").find(".fighters");
+            console.log(enemy);
 
-            enemy2.removeClass("hero");
-            // enemy.addClass("enemy"); //turns all enemies red
-            enemy2.addClass("enemy"); //turns all enemies red
-            // enemy.appendTo('#bad-guy');
-            enemy2.appendTo('#bad-guy'); //
+            enemy.removeClass("hero");
+            enemy.addClass("enemy"); //turns all enemies red
+            enemy.appendTo('#bad-guy');
+
             // assign to correct fighter object
             if (myFighter === "box1") {
                 myFighter = player1_Obj;
@@ -119,6 +118,7 @@ $(document).ready(function() {
     $('#bad-guy').on('click', 'div', function(e) {
 
         beginFightSnd.play();
+        setTimeout(showButtons,2800); // show buttons after intro sound    
         var x = this.id;
         if (myEnemy === "empty") {
             myEnemy = x;
@@ -134,15 +134,10 @@ $(document).ready(function() {
             $('#stats').show();
             $('#wage-war').show();
             $('#choose-enemy').hide();
-
-            // $('body').scrollTo('#defender');
-
             $('html, body').animate({
                 scrollTop: ($('#defender').offset().top)
             }, 500); // turns them red
             // should create a function and call it here to secure the screens
-            //assign correct enemy object
-            // alert(myEnemy);
             if (myEnemy === "box1") {
                 myEnemy = player1_Obj;
                 console.log(myEnemy.counter());
@@ -174,12 +169,19 @@ $(document).ready(function() {
         if (myHealth > 0 && enemyHealth <= 0) {
             console.log("Good Guy wins");
             winCount++;
+            clearStats();
+            hideButtons();
+
             // alert(win)
             if (winCount == 3) {
-                $('#enemy-h2').html("Flawless Victory!");
+
                 $('#hero').html("Winner");
-                $('#attackBtn').addClass('view-hidden');
-            } else {
+                $('#attackBtn').hide();
+                $('#resetBtn').show();
+                $('#resetBtn').html("You Won! Play Again?");
+                $('#stats').hide();
+                $('#enemy').html("Defeated");
+            } else { // show opponents to choose from
                 $('#choose-enemy').show();
                 $('#opponent').removeClass('callToAction');
             };
@@ -187,14 +189,19 @@ $(document).ready(function() {
             $('html, body').animate({
                 scrollTop: ($('#choose-enemy').offset().top)
             }, 500);
-            alert("Game Over You Win");
-
             cartOffEnemy();
             setTimeout(fadeEnemy, 500);
-
+            // I lose and opponent is alive
         } else if (enemyHealth > 0 && myHealth <= 0) {
-            console.log("Not this time Sparky");
-            alert("Game Over You Lose");
+            $('#hero').html("Defeated");
+            $('.hero-corner').addClass("fade");
+            $('#attackBtn').hide();
+            $('#resetBtn').html("You Lost :( Try Again?");
+            $('#opponent').html("Winner");
+            $('#stats').hide();
+
+
+            // we both die
         } else if (myHealth <= 0 && enemyHealth <= 0) {
             console.log("you both died");
             alert("Game Over You Lose, But you killed this dude");
@@ -213,14 +220,13 @@ $(document).ready(function() {
 
 
             // i attack my opponnent this increments the 
-            $('#goodguy-fight').html("You attacked " + myEnemy.myName + " for " + myFighter.attackP + " damage");
+            $('#goodguy-fight').html("You attacked " + myEnemy.fullName + " for " + myFighter.attackP + " damage");
 
 
-            myFighter.attack(counter); // call attack function
-            $('#badGuy').html("Enemy Health is: " + myEnemy.health);
+            myFighter.attack(counter); // call attack method
             // myFighter.defend(counter); // i defend myself from enemy counterAttack
             myEnemy.defend(myFighter.attackP); // hurt the enemy
-            $('#badguy-fight').html(myEnemy.myName + " attacked you back for " + myEnemy.counterAttack);
+            $('#badguy-fight').html(myEnemy.fullName + " attacked you back for " + myEnemy.counterAttack);
             console.log("My health is " + myFighter.health);
             console.log("Opponent health is " + myEnemy.health);
 
@@ -238,7 +244,6 @@ $(document).ready(function() {
             console.log("this is myenemys atk" + myEnemy.attackP)
 
 
-
         } else { console.log("Pick a fighter man") };
 
 
@@ -250,7 +255,6 @@ $(document).ready(function() {
     $("#resetBtn").click(function() {
 
         // set up reset code here
-        // alert(myEnemy);
         window.location.reload(true);
 
     });
@@ -258,7 +262,7 @@ $(document).ready(function() {
 
     $("#main-player-div").find(".btn").addClass("hero");
     $("#main-player-div").find(".fighters").addClass("hero");
-    //    {
+
 
 });
 
@@ -273,9 +277,6 @@ function cartOffEnemy() {
 function resetEnemy() {
     delete window.myEnemy;
     window.myEnemy = "empty";
-    $('#badGuy').html("Enemy Health is: ");
-
-
 }
 
 
@@ -283,5 +284,20 @@ function fadeEnemy(id) {
     var fallenSoldier = $("#defender").find(".enemy");
     fallenSoldier.addClass("dead");
     resetEnemy();
+}
 
+function clearStats(){
+    $('#goodguy-fight').empty();
+    $('#badguy-fight').empty();
+}
+
+function hideButtons(){
+    $("#resetBtn").hide();
+    $("#attackBtn").hide();
+}
+
+
+function showButtons(){
+    $("#resetBtn").show();
+    $("#attackBtn").show();
 }
